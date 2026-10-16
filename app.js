@@ -1,7 +1,7 @@
 const cases = {
-  sofa: { title: "Sofa renewal", description: "A fabric-safe refresh for everyday seating.", image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1500&q=90" },
-  carpet: { title: "Carpet reset", description: "A closer look at traffic lanes and overall brightness.", image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1500&q=90" },
-  mattress: { title: "Mattress care", description: "A fresher-looking surface, from edge to edge.", image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1500&q=90" }
+  sofa: { title: "Sofa renewal", description: "A fabric-safe refresh for everyday seating.", before: "sofa-before.png", after: "sofa-after.png" },
+  carpet: { title: "Area rug renewal", description: "Traffic marks lift, pattern and texture return.", before: "rug-before.png", after: "rug-after.png" },
+  mattress: { title: "Mattress care", description: "A fresher-looking surface, from edge to edge.", before: "mattress-before.png", after: "mattress-after.png" }
 };
 
 const range = document.querySelector('#comparison-range');
@@ -14,11 +14,18 @@ document.querySelectorAll('[data-case]').forEach((button) => button.addEventList
   document.querySelectorAll('[data-case]').forEach((tab) => tab.classList.toggle('active', tab === button));
   document.querySelector('#case-title').textContent = item.title;
   document.querySelector('#case-description').textContent = item.description;
-  document.querySelector('#before-image').src = item.image;
-  document.querySelector('#after-image').src = item.image;
+  document.querySelector('#before-image').src = item.before;
+  document.querySelector('#after-image').src = item.after;
   range.value = 48; setComparison(48);
 }));
 
 const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }), { threshold: .12 });
 document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+const countObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
+  if (!entry.isIntersecting) return;
+  const element = entry.target; const end = Number(element.dataset.count); const suffix = element.dataset.suffix || ''; const decimals = Number(element.dataset.decimals || 0); const started = performance.now();
+  const tick = (now) => { const p = Math.min((now - started) / 1350, 1); const value = end * (1 - Math.pow(1 - p, 4)); element.textContent = `${decimals ? value.toFixed(decimals) : Math.round(value).toLocaleString('en-US')}${suffix}`; if (p < 1) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick); countObserver.unobserve(element);
+}), { threshold: .6 });
+document.querySelectorAll('[data-count]').forEach((element) => countObserver.observe(element));
 document.querySelector('#demo-form').addEventListener('submit', (event) => { event.preventDefault(); const note = document.querySelector('.preview-note'); note.hidden = false; note.textContent = 'Presentation preview: request sending will be enabled in the production version.'; });
