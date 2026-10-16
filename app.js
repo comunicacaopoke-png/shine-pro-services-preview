@@ -26,6 +26,48 @@ function bindCaseTabs() {
 }
 bindCaseTabs();
 
+let faqPendingOpen;
+function faqMarkup(faqs) {
+  return faqs.map((faq, index) => `<article class="faq-item"><button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-${index}"><span>${escapeHtml(faq.question)}</span><b aria-hidden="true">+</b></button><div class="faq-answer" id="faq-answer-${index}" aria-hidden="true"><div><p>${escapeHtml(faq.answer)}</p></div></div></article>`).join('');
+}
+function upgradeFaqFallback() {
+  const list = document.querySelector('.faq-list');
+  if (!list || list.querySelector('.faq-question')) return;
+  const faqs = [...list.querySelectorAll('details')].map((detail) => {
+    const summary = detail.querySelector('summary');
+    const symbol = summary?.querySelector('b');
+    symbol?.remove();
+    return { question: summary?.textContent?.trim() || '', answer: detail.querySelector('p')?.textContent?.trim() || '' };
+  });
+  if (faqs.length) list.innerHTML = faqMarkup(faqs);
+}
+function bindFaqAccordion() {
+  const list = document.querySelector('.faq-list');
+  if (!list) return;
+  let openItem = list.querySelector('.faq-item.is-open');
+  list.querySelectorAll('.faq-question').forEach((button) => button.addEventListener('click', () => {
+    const item = button.closest('.faq-item');
+    if (!item) return;
+    const setOpen = (target, open) => {
+      target.classList.toggle('is-open', open);
+      target.querySelector('.faq-question').setAttribute('aria-expanded', String(open));
+      target.querySelector('.faq-answer').setAttribute('aria-hidden', String(!open));
+    };
+    if (faqPendingOpen) { clearTimeout(faqPendingOpen); faqPendingOpen = null; }
+    if (openItem === item) { setOpen(item, false); openItem = null; return; }
+    if (openItem) {
+      setOpen(openItem, false);
+      openItem = null;
+      faqPendingOpen = setTimeout(() => { setOpen(item, true); openItem = item; faqPendingOpen = null; }, 380);
+      return;
+    }
+    setOpen(item, true);
+    openItem = item;
+  }));
+}
+upgradeFaqFallback();
+bindFaqAccordion();
+
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' })[character]);
 }
@@ -65,7 +107,8 @@ function renderProcess(steps) {
 function renderFaqs(faqs) {
   const active = faqs.filter((faq) => faq.active !== false);
   if (!active.length) return;
-  document.querySelector('.faq-list').innerHTML = active.map((faq) => `<details><summary>${escapeHtml(faq.question)}<b>+</b></summary><p>${escapeHtml(faq.answer)}</p></details>`).join('');
+  document.querySelector('.faq-list').innerHTML = faqMarkup(active);
+  bindFaqAccordion();
 }
 function renderTestimonials(testimonials) {
   const section = document.querySelector('.reviews');
