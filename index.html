@@ -11,11 +11,11 @@
     <link rel="stylesheet" href="styles.css" />
     <style>
       .hero-letter { display: none; }
-      .service-card footer a { display:inline-flex; align-items:center; justify-content:center; min-height:29px; border:1px solid #d9c5b4; padding:6px 8px; color:#4d382e; font-size:9px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
-      .socials > * { display:grid; place-items:center; width:28px; height:28px; border:1px solid #7e6453; border-radius:50%; color:#ded0c5; }
+      .service-card footer { justify-content:flex-start; }
+      .service-card footer a { display:none; }
+      .socials > * { display:grid; place-items:center; width:28px; height:28px; border:1px solid #7e6453; border-radius:50%; color:#ded0c5; transition:transform .24s cubic-bezier(.2,.8,.25,1),border-color .24s ease,background .24s ease,color .24s ease,box-shadow .24s ease; }
       .socials svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
-      .socials a { transition:border-color .2s,color .2s; }
-      .socials a:hover { border-color:#d6ae8e; color:#fff; }
+      .socials > *:hover { border-color:#d6ae8e; background:#d6ae8e; color:#2e211a; box-shadow:0 8px 16px #0003; transform:translateY(-4px) scale(1.06); }
     </style>
     <style>.hero{background-image:url('hero-cleaning.png')}</style>
   </head>
@@ -47,11 +47,11 @@
       <section class="section services" id="services"><div class="shell">
         <div class="section-head centered reveal"><p class="eyebrow">OUR SERVICES</p><h2>One trusted team for the surfaces you live on.</h2><p>Choose the service that fits your home. You’ll see a starting estimate before choosing a time.</p></div>
         <div class="service-grid">
-          <article class="service-card reveal"><div class="card-image"><img src="service-carpet.png" alt="Clean living room carpet" /><span>01</span></div><div><h3>Carpet Cleaning</h3><p>Deep extraction for everyday soil, traffic lanes, spots, and odors — not just surface dust.</p><footer><small>Rooms, hallways &amp; stairs</small><a href="#estimate">Get estimate</a></footer></div></article>
-          <article class="service-card reveal"><div class="card-image"><img src="service-upholstery.png" alt="Fresh fabric sofa" /><span>02</span></div><div><h3>Upholstery Cleaning</h3><p>Fabric-safe treatment for sofas, loveseats, sectionals, dining chairs, and everyday seating.</p><footer><small>Sofas &amp; chairs</small><a href="#estimate">Get estimate</a></footer></div></article>
-          <article class="service-card reveal"><div class="card-image"><img src="service-mattress.png" alt="Bright bedroom mattress" /><span>03</span></div><div><h3>Mattress Cleaning</h3><p>Deep extraction that helps remove body oils, dust, spots, and stale odors from your mattress.</p><footer><small>Twin to king</small><a href="#estimate">Get estimate</a></footer></div></article>
-          <article class="service-card reveal"><div class="card-image"><img src="service-rug.png" alt="Area rug in a bright room" /><span>04</span></div><div><h3>Area Rug Cleaning</h3><p>Careful cleaning for everyday and delicate rugs, chosen for the fiber and condition.</p><footer><small>Small rugs to 8 × 10</small><a href="#estimate">Get estimate</a></footer></div></article>
-          <article class="service-card reveal"><div class="card-image"><img src="service-treatment.png" alt="Fresh family room" /><span>05</span></div><div><h3>Stain &amp; Odor Treatment</h3><p>Drink spills, pet accidents, smoke, and heavy soil get the treatment that fits the material.</p><footer><small>Spills, pets &amp; smoke</small><a href="#estimate">Get estimate</a></footer></div></article>
+          <article class="service-card reveal"><div class="card-image"><img src="service-carpet.png" alt="Clean living room carpet" /><span>01</span></div><div><h3>Carpet Cleaning</h3><p>Deep extraction for everyday soil, traffic lanes, spots, and odors — not just surface dust.</p><footer><small>Rooms, hallways &amp; stairs</small></footer></div></article>
+          <article class="service-card reveal"><div class="card-image"><img src="service-upholstery.png" alt="Fresh fabric sofa" /><span>02</span></div><div><h3>Upholstery Cleaning</h3><p>Fabric-safe treatment for sofas, loveseats, sectionals, dining chairs, and everyday seating.</p><footer><small>Sofas &amp; chairs</small></footer></div></article>
+          <article class="service-card reveal"><div class="card-image"><img src="service-mattress.png" alt="Bright bedroom mattress" /><span>03</span></div><div><h3>Mattress Cleaning</h3><p>Deep extraction that helps remove body oils, dust, spots, and stale odors from your mattress.</p><footer><small>Twin to king</small></footer></div></article>
+          <article class="service-card reveal"><div class="card-image"><img src="service-rug.png" alt="Area rug in a bright room" /><span>04</span></div><div><h3>Area Rug Cleaning</h3><p>Careful cleaning for everyday and delicate rugs, chosen for the fiber and condition.</p><footer><small>Small rugs to 8 × 10</small></footer></div></article>
+          <article class="service-card reveal"><div class="card-image"><img src="service-treatment.png" alt="Fresh family room" /><span>05</span></div><div><h3>Stain &amp; Odor Treatment</h3><p>Drink spills, pet accidents, smoke, and heavy soil get the treatment that fits the material.</p><footer><small>Spills, pets &amp; smoke</small></footer></div></article>
         </div>
       </div></section>
 

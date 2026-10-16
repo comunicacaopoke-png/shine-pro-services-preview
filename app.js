@@ -44,7 +44,7 @@ function metricValue(value) {
 function renderServices(services) {
   const active = services.filter((service) => service.active !== false);
   if (!active.length) return;
-  document.querySelector('.service-grid').innerHTML = active.map((service, index) => `<article class="service-card reveal visible"><div class="card-image"><img src="${escapeHtml(assetUrl(service.image))}" alt="${escapeHtml(service.title)}" /><span>${String(index + 1).padStart(2, '0')}</span></div><div><h3>${escapeHtml(service.title)}</h3><p>${escapeHtml(service.text)}</p><footer><small>${escapeHtml(service.detail)}</small><a href="#estimate" aria-label="Get an estimate for ${escapeHtml(service.title)}">Get estimate</a></footer></div></article>`).join('');
+  document.querySelector('.service-grid').innerHTML = active.map((service, index) => `<article class="service-card reveal visible"><div class="card-image"><img src="${escapeHtml(assetUrl(service.image))}" alt="${escapeHtml(service.title)}" /><span>${String(index + 1).padStart(2, '0')}</span></div><div><h3>${escapeHtml(service.title)}</h3><p>${escapeHtml(service.text)}</p><footer><small>${escapeHtml(service.detail)}</small></footer></div></article>`).join('');
   const select = document.querySelector('#demo-form select');
   if (select) select.innerHTML = active.map((service) => `<option>${escapeHtml(service.title)}</option>`).join('');
 }
@@ -68,7 +68,9 @@ function renderFaqs(faqs) {
   document.querySelector('.faq-list').innerHTML = active.map((faq) => `<details><summary>${escapeHtml(faq.question)}<b>+</b></summary><p>${escapeHtml(faq.answer)}</p></details>`).join('');
 }
 function renderTestimonials(testimonials) {
-  if (!testimonials.length) return;
+  const section = document.querySelector('.reviews');
+  if (!testimonials.length) { section?.setAttribute('hidden', ''); return; }
+  section?.removeAttribute('hidden');
   document.querySelector('.review-grid').innerHTML = testimonials.slice(0, 3).map((item) => `<article class="review-card reveal visible"><span>${'★'.repeat(Math.max(1, Math.min(5, Number(item.rating) || 5)))}</span><blockquote>“${escapeHtml(item.quote)}”</blockquote><footer><b>${escapeHtml(item.author)}</b><small>${escapeHtml(item.context)}</small></footer></article>`).join('');
 }
 function socialIcon(network) {
