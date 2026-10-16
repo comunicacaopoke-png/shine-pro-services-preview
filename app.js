@@ -44,7 +44,7 @@ function metricValue(value) {
 function renderServices(services) {
   const active = services.filter((service) => service.active !== false);
   if (!active.length) return;
-  document.querySelector('.service-grid').innerHTML = active.map((service, index) => `<article class="service-card reveal visible"><div class="card-image"><img src="${escapeHtml(assetUrl(service.image))}" alt="${escapeHtml(service.title)}" /><span>${String(index + 1).padStart(2, '0')}</span></div><div><h3>${escapeHtml(service.title)}</h3><p>${escapeHtml(service.text)}</p><footer><small>${escapeHtml(service.detail)}</small><a href="#estimate" aria-label="Get an estimate for ${escapeHtml(service.title)}">↗</a></footer></div></article>`).join('');
+  document.querySelector('.service-grid').innerHTML = active.map((service, index) => `<article class="service-card reveal visible"><div class="card-image"><img src="${escapeHtml(assetUrl(service.image))}" alt="${escapeHtml(service.title)}" /><span>${String(index + 1).padStart(2, '0')}</span></div><div><h3>${escapeHtml(service.title)}</h3><p>${escapeHtml(service.text)}</p><footer><small>${escapeHtml(service.detail)}</small><a href="#estimate" aria-label="Get an estimate for ${escapeHtml(service.title)}">Get estimate</a></footer></div></article>`).join('');
   const select = document.querySelector('#demo-form select');
   if (select) select.innerHTML = active.map((service) => `<option>${escapeHtml(service.title)}</option>`).join('');
 }
@@ -71,6 +71,11 @@ function renderTestimonials(testimonials) {
   if (!testimonials.length) return;
   document.querySelector('.review-grid').innerHTML = testimonials.slice(0, 3).map((item) => `<article class="review-card reveal visible"><span>${'★'.repeat(Math.max(1, Math.min(5, Number(item.rating) || 5)))}</span><blockquote>“${escapeHtml(item.quote)}”</blockquote><footer><b>${escapeHtml(item.author)}</b><small>${escapeHtml(item.context)}</small></footer></article>`).join('');
 }
+function socialIcon(network) {
+  if (network === 'instagram') return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r=".8" fill="currentColor" stroke="none"/></svg>';
+  if (network === 'facebook') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 21v-8h3l.5-3H14V8.5c0-.9.3-1.5 1.7-1.5H18V4.3c-.4-.1-1.3-.3-2.5-.3-2.6 0-4.4 1.6-4.4 4.5V10H8v3h3.1v8"/></svg>';
+  return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.6a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.6Z"/><path d="M9.2 8.4c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.8 1.8c.1.3.1.5-.1.7l-.5.6c.7 1.2 1.5 2 2.7 2.7l.6-.5c.2-.2.4-.2.7-.1l1.8.8c.3.1.4.3.4.5v.5c0 .3 0 .5-.5.7-.4.2-1 .3-1.6.1-2-.6-4.3-2.5-5.5-4.4-.8-1.3-1.2-2.7-1-3.5Z"/></svg>';
+}
 function renderContacts(contacts) {
   if (!contacts || !Object.values(contacts).some(Boolean)) return;
   const footer = document.querySelector('.footer-top > div:last-child');
@@ -79,7 +84,9 @@ function renderContacts(contacts) {
   if (contacts.email) links.push(`<a href="mailto:${escapeHtml(contacts.email)}">${escapeHtml(contacts.email)}</a>`);
   if (contacts.address) links.push(`<small>${escapeHtml(contacts.address)}</small>`);
   if (contacts.businessHours) links.push(`<small>${escapeHtml(contacts.businessHours)}</small>`);
-  const social = [['instagram', 'Instagram', '◎'], ['facebook', 'Facebook', 'f'], ['whatsapp', 'WhatsApp', '◔']].filter(([key]) => contacts[key]).map(([key, label, symbol]) => `<a href="${escapeHtml(contacts[key])}" target="_blank" rel="noreferrer" aria-label="${label}">${symbol}</a>`).join('');
+  const social = [['instagram', 'Instagram'], ['facebook', 'Facebook'], ['whatsapp', 'WhatsApp']].map(([key, label]) => contacts[key]
+    ? `<a href="${escapeHtml(contacts[key])}" target="_blank" rel="noreferrer" aria-label="${label}">${socialIcon(key)}</a>`
+    : `<span aria-label="${label} — configure in Contacts">${socialIcon(key)}</span>`).join('');
   footer.innerHTML = `<b>CONTACT</b>${links.join('')}<a href="#estimate">Request an estimate</a><div class="socials">${social}</div>`;
 }
 function applyPublishedData(data) {
