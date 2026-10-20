@@ -87,8 +87,6 @@ function renderServices(services) {
   const active = services.filter((service) => service.active !== false);
   if (!active.length) return;
   document.querySelector('.service-grid').innerHTML = active.map((service, index) => `<article class="service-card reveal visible"><div class="card-image"><img src="${escapeHtml(assetUrl(service.image))}" alt="${escapeHtml(service.title)}" /><span>${String(index + 1).padStart(2, '0')}</span></div><div><h3>${escapeHtml(service.title)}</h3><p>${escapeHtml(service.text)}</p><footer><small>${escapeHtml(service.detail)}</small></footer></div></article>`).join('');
-  const select = document.querySelector('#demo-form select');
-  if (select) select.innerHTML = active.map((service) => `<option>${escapeHtml(service.title)}</option>`).join('');
 }
 function renderTransformations(transformations) {
   const active = transformations.filter((item) => item.active !== false);
@@ -122,10 +120,10 @@ function socialIcon(network) {
   return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.6a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.6Z"/><path d="M9.2 8.4c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.8 1.8c.1.3.1.5-.1.7l-.5.6c.7 1.2 1.5 2 2.7 2.7l.6-.5c.2-.2.4-.2.7-.1l1.8.8c.3.1.4.3.4.5v.5c0 .3 0 .5-.5.7-.4.2-1 .3-1.6.1-2-.6-4.3-2.5-5.5-4.4-.8-1.3-1.2-2.7-1-3.5Z"/></svg>';
 }
 function renderContacts(contacts) {
-  if (!contacts || !Object.values(contacts).some(Boolean)) return;
+  contacts = contacts || {};
   const footer = document.querySelector('.footer-top > div:last-child');
-  const links = [];
-  if (contacts.phone) links.push(`<a href="tel:${escapeHtml(contacts.phone.replace(/[^+\d]/g, ''))}">${escapeHtml(contacts.phone)}</a>`);
+  const links = ['<a href="tel:+19044087466">(904) 408-7466</a>'];
+  contacts = { ...contacts, whatsapp: 'https://wa.me/19044087466' };
   if (contacts.email) links.push(`<a href="mailto:${escapeHtml(contacts.email)}">${escapeHtml(contacts.email)}</a>`);
   if (contacts.address) links.push(`<small>${escapeHtml(contacts.address)}</small>`);
   if (contacts.businessHours) links.push(`<small>${escapeHtml(contacts.businessHours)}</small>`);
@@ -139,7 +137,7 @@ function applyPublishedData(data) {
   if (!content) return;
   const hero = document.querySelector('.hero');
   hero.querySelector('.eyebrow').textContent = content.eyebrow;
-  hero.querySelector('h1').textContent = content.heroTitle;
+  hero.querySelector('h1').textContent = /just vacuuming/i.test(content.heroTitle || '') ? 'It’s your home’s time to SHINE' : content.heroTitle;
   hero.querySelector('.hero-copy').textContent = content.heroText;
   const impact = document.querySelector('.impact');
   impact.querySelector('.impact-copy .eyebrow').textContent = content.impactKicker;
@@ -163,10 +161,10 @@ function applyPublishedData(data) {
   document.querySelector('.story-copy h2').textContent = content.storyTitle;
   document.querySelector('.story-copy h2 + p').textContent = content.storyText;
   document.querySelector('.estimate-copy h2').textContent = content.bookingTitle;
-  document.querySelector('.estimate-copy h2 + p').textContent = content.bookingText;
+  document.querySelector('.estimate-copy h2 + p').textContent = /no payment/i.test(content.bookingText || '') ? 'Build your estimate, choose a preferred time, and review your service before contacting our team.' : content.bookingText;
   renderServices(data.services || []);
   renderTransformations(data.transformations || []);
-  renderProcess(data.processSteps || []);
+  renderProcess((data.processSteps || []).map(step => ({ ...step, text: /reserve without paying|no payment/i.test(step.text || '') ? 'Request a preferred time at least 24 hours ahead. Our team will confirm availability.' : step.text })));
   renderFaqs(data.faqs || []);
   renderTestimonials(data.testimonials || []);
   renderContacts(data.contacts);
@@ -186,4 +184,4 @@ const countObserver = new IntersectionObserver((entries) => entries.forEach((ent
   requestAnimationFrame(tick); countObserver.unobserve(element);
 }), { threshold: .6 });
 document.querySelectorAll('[data-count]').forEach((element) => countObserver.observe(element));
-document.querySelector('#demo-form').addEventListener('submit', (event) => { event.preventDefault(); const note = document.querySelector('.preview-note'); note.hidden = false; note.textContent = 'Presentation preview: request sending will be enabled in the production version.'; });
+
