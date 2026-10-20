@@ -14,3 +14,4 @@
 .footer .phone-menu summary { color:#ded0c5; font-weight:400; }
 .footer .phone-menu-options { right:auto; left:0; }
 @media(max-width:620px){ .header-inner { gap:8px; justify-content:space-between; } .phone-menu summary { font-size:10px; } .phone-menu-options { min-width:140px; } }
+.price .minimum-notice { display:block; margin:8px 0 4px; color:#6b3e28; font-size:11px; font-weight:700; line-height:1.5; }
