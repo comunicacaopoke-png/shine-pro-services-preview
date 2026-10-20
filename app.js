@@ -122,7 +122,7 @@ function socialIcon(network) {
 function renderContacts(contacts) {
   contacts = contacts || {};
   const footer = document.querySelector('.footer-top > div:last-child');
-  const links = ['<a href="tel:+19044087466">(904) 408-7466</a>'];
+  const links = ['<details class="phone-menu"><summary aria-label="Contact Shine Pro at (904) 408-7466">(904) 408-7466</summary><div class="phone-menu-options"><a href="tel:+19044087466">Call</a><a href="https://wa.me/19044087466" target="_blank" rel="noopener noreferrer">WhatsApp</a></div></details>'];
   contacts = { ...contacts, whatsapp: 'https://wa.me/19044087466' };
   if (contacts.email) links.push(`<a href="mailto:${escapeHtml(contacts.email)}">${escapeHtml(contacts.email)}</a>`);
   if (contacts.address) links.push(`<small>${escapeHtml(contacts.address)}</small>`);
