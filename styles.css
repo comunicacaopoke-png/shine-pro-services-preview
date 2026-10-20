@@ -49,3 +49,46 @@
 .service-panel-inner { min-height:0; overflow:hidden; }
 .service-group-toggle { transition:background-color 220ms ease; }
 @media (prefers-reduced-motion:reduce) { .service-panel,.service-group-toggle { transition:none; } }
+
+/* Booking details and review */
+.booking-intro { margin:-8px 0 22px; color:#75665c; font-size:13px; line-height:1.65; }
+.booking-fields label:not(.check) { margin-bottom:17px; color:#4d3c31; font-size:12px; font-weight:700; }
+.booking-fields input:not([type="radio"]), .request-card input[type="date"], .booking-fields textarea { display:block; width:100%; min-height:50px; margin-top:7px; border:1px solid #ded1c5; border-radius:6px; padding:12px 14px; background:#fff; color:#302821; font:400 15px/1.4 Inter,Arial,sans-serif; transition:border-color .2s,box-shadow .2s; }
+.booking-fields input::placeholder { color:#aa9d93; }
+.booking-fields input:focus, .request-card input[type="date"]:focus { outline:none; border-color:#a97d5f; box-shadow:0 0 0 3px #b8886129; }
+.booking-fields .field-optional { color:#908077; font-weight:400; }
+.booking-fields .customer-choice { margin:0 0 20px; }
+.customer-choice legend { margin-bottom:10px; color:#4d3c31; font-size:12px; font-weight:700; }
+.customer-choice-options { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+.booking-fields .customer-choice-options label { display:block; position:relative; margin:0; cursor:pointer; }
+.customer-choice-options input { position:absolute; width:1px; height:1px; opacity:0; }
+.customer-choice-options span { display:flex; min-height:50px; align-items:center; justify-content:center; padding:10px; border:1px solid #ded1c5; border-radius:6px; background:#fff; color:#6d5c50; font-size:12px; text-align:center; transition:background .2s,border-color .2s,color .2s; }
+.customer-choice-options input:checked + span { border-color:#80614d; background:#f4ece4; color:#3d2c22; }
+.customer-choice-options input:focus-visible + span { outline:3px solid #b8886177; outline-offset:2px; }
+.deposit-notice { display:flex; gap:13px; margin:0 0 25px; border:1px solid #e9d7c6; border-radius:8px; padding:15px; background:#faf4ed; }
+.deposit-notice-icon { display:grid; flex:0 0 32px; height:32px; place-items:center; border-radius:50%; background:#e9d6c4; color:#684833; font-size:16px; font-weight:700; }
+.deposit-notice strong { display:block; color:#50382b; font-size:13px; }
+.deposit-notice p { margin:4px 0 0; color:#746257; font-size:11px; line-height:1.6; }
+.privacy-note { margin:17px 0 20px; color:#776b62; font-size:11px; line-height:1.65; }
+.booking-fields .button.full { gap:10px; }
+.review-heading { margin:25px 0 9px; color:#a07356; font-size:10px; font-weight:800; letter-spacing:.13em; }
+.review-heading + .booking-cart { margin-top:0; }
+.booking-suggestions { gap:8px; }
+.booking-suggestions button { min-height:40px; padding:9px 12px; border-radius:4px; background:#fff; }
+.review-appointment { display:grid; gap:4px; margin:24px 0; border:1px solid #e6d9cc; border-radius:6px; padding:15px; }
+.review-appointment span { color:#a07356; font-size:10px; font-weight:800; letter-spacing:.12em; }
+.review-appointment strong { color:#49382d; font-size:14px; }
+.review-appointment small { color:#82736a; font-size:11px; }
+.deposit-summary { margin:20px 0; border-top:1px solid #e8ded5; border-bottom:1px solid #e8ded5; padding:18px 0; }
+.deposit-summary > div { display:flex; justify-content:space-between; gap:12px; align-items:center; color:#4b382d; font-size:13px; font-weight:700; }
+.deposit-summary > div strong { font:600 23px Sora,Inter,sans-serif; }
+.deposit-summary p { margin:10px 0 0; color:#74665d; font-size:11px; line-height:1.65; }
+.payment-simulation { border:1px solid #e2d2c3; border-radius:8px; padding:20px; background:#fcf8f4; }
+.simulation-badge { color:#946647; font-size:9px; font-weight:800; letter-spacing:.14em; }
+.payment-simulation h4 { margin:7px 0; color:#49362a; font:600 19px Sora,Inter,sans-serif; }
+.payment-simulation p { margin:8px 0 14px; color:#74665d; font-size:11px; line-height:1.6; }
+.simulation-button { min-height:44px; width:100%; border:1px solid #8c6b55; border-radius:5px; padding:10px; background:#fff; color:#654634; font:700 12px Inter,Arial,sans-serif; cursor:pointer; }
+.payment-simulation .simulation-result { margin:14px 0 0; color:#4c6849; font-weight:700; }
+.agreement { margin-top:22px; font-size:12px; }
+@media(max-width:420px){ .customer-choice-options { grid-template-columns:1fr; } .request-card { padding:24px 20px; } .booking-actions { flex-wrap:wrap; } .booking-actions .button { flex:1 1 150px; } }
+@media(prefers-reduced-motion:reduce){ .booking-fields input,.customer-choice-options span { transition:none; } }
