@@ -42,3 +42,10 @@
 .service-extras { display:grid; gap:8px; }
 .service-rooms .service-option { min-height:50px; }
 @media (max-width:360px) { .service-rooms .service-option { padding:8px 6px; font-size:11px; } .service-rooms .service-option-price b { display:none; } }
+
+/* Smooth, sequential accordion motion. */
+.service-panel { display:grid; grid-template-rows:0fr; transition:grid-template-rows 320ms cubic-bezier(.22,.7,.25,1); }
+.service-panel.is-open { grid-template-rows:1fr; }
+.service-panel-inner { min-height:0; overflow:hidden; }
+.service-group-toggle { transition:background-color 220ms ease; }
+@media (prefers-reduced-motion:reduce) { .service-panel,.service-group-toggle { transition:none; } }
