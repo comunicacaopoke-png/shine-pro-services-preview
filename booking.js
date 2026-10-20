@@ -25,10 +25,13 @@
       return `<div class="service-picker"><p class="service-picker-title">Choose a category</p><p class="booking-form-note">Tap a service to add it to your estimate.</p>${groups.map((group, index) => {
         const open = state.group === group;
         const items = catalog.filter(item => item.group === group);
-        return `<div class="service-group"><button type="button" class="service-group-toggle" data-group="${index}" aria-expanded="${open}" aria-controls="service-group-${index}"><span>${esc(labels[group] || group)}</span><span aria-hidden="true">${open ? '−' : '+'}</span></button>${open ? `<div id="service-group-${index}" class="service-options ${group === 'Same-visit packages' ? 'service-options-packages' : ''}">${items.map(item => {
+        const option = item => {
           const quantity = state.cart.find(line => line.id === item.id)?.quantity || 0;
-          return `<button type="button" class="service-option" data-service="${esc(item.id)}" aria-label="Add ${esc(item.name)}, ${currency(item.price)}${quantity ? `, ${quantity} currently selected` : ''}"><span class="service-option-name">${esc(item.name)}${quantity ? `<small>${quantity} selected</small>` : ''}</span><span class="service-option-price">${currency(item.price)} <b aria-hidden="true">+</b></span></button>`;
-        }).join('')}</div>` : ''}</div>`;
+          const visibleName = /^rooms\d+$/.test(item.id) ? item.name.replace(/ \(up to 200 sq ft(?: each)?\)/, '') : item.name;
+          return `<button type="button" class="service-option" data-service="${esc(item.id)}" aria-label="Add ${esc(item.name)}, ${currency(item.price)}${quantity ? `, ${quantity} currently selected` : ''}"><span class="service-option-name">${esc(visibleName)}${quantity ? `<small>${quantity} selected</small>` : ''}</span><span class="service-option-price">${currency(item.price)} <b aria-hidden="true">+</b></span></button>`;
+        };
+        const options = group === 'Carpet cleaning' ? `<p class="service-room-note">Rooms: up to 200 sq ft each</p><div class="service-rooms">${items.filter(item => /^rooms\d+$/.test(item.id)).map(option).join('')}</div><div class="service-extras">${items.filter(item => !/^rooms\d+$/.test(item.id)).map(option).join('')}</div>` : items.map(option).join('');
+        return `<div class="service-group"><button type="button" class="service-group-toggle" data-group="${index}" aria-expanded="${open}" aria-controls="service-group-${index}"><span>${esc(labels[group] || group)}</span><span aria-hidden="true">${open ? '−' : '+'}</span></button>${open ? `<div id="service-group-${index}" class="service-options ${group === 'Same-visit packages' ? 'service-options-packages' : ''} ${group === 'Carpet cleaning' ? 'service-options-carpet' : ''}">${options}</div>` : ''}</div>`;
       }).join('')}<p class="service-announcement" role="status" aria-live="polite">${esc(state.announcement)}</p></div>`;
     }
     function render() {

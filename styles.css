@@ -35,3 +35,10 @@
 .service-group-toggle:focus-visible,.service-option:focus-visible { outline:3px solid #a47453; outline-offset:-3px; }
 .service-announcement { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 @media (max-width:420px) { .service-options { grid-template-columns:1fr; } .service-option { min-height:54px; } }
+
+.service-options-carpet { grid-template-columns:1fr; }
+.service-room-note { margin:0; color:#74665e; font-size:11px; }
+.service-rooms { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.service-extras { display:grid; gap:8px; }
+.service-rooms .service-option { min-height:50px; }
+@media (max-width:360px) { .service-rooms .service-option { padding:8px 6px; font-size:11px; } .service-rooms .service-option-price b { display:none; } }
